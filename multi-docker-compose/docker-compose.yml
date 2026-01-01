@@ -1,28 +1,34 @@
-version: "3"
+version: "3.8"
+
 services:
-  frontend:
-    build: ./frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-
-  backend:
-    build: ./backend
-    ports:
-      - "5000:5000"
-    depends_on:
-      - mongo
-    environment:
-      - MONGODB_URL=mongodb://mongo:27017/usersdb
-      - PORT=5000
-
   mongo:
-    image: mongo
+    image: mongo:6
+    container_name: mongo
     ports:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "2000:2000"
+    environment:
+      MONGODB_URL: mongodb://mongo:27017/usersdb
+      PORT: 2000
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_API_URL: http://backend:2000
+    depends_on:
+      - backend
 
 volumes:
   mongo-data:
