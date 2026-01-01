@@ -11,13 +11,6 @@ const app = express();
 const PORT = process.env.PORT || 2000;
 const MONGODB_URL = process.env.MONGO_URL;
 
-const corsOptions = {
-    origin: ["http://localhost:3000"],
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true
-};
-
 app.use(cors());
 app.use(express.json());
 
