@@ -1,42 +1,56 @@
-# Docker Examples 🐳
+<div align="center">
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
-  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js">
-  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React">
-  <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB">
-</p>
+# Docker Examples
 
-<p align="center">
-  A comprehensive collection of Docker examples demonstrating containerization best practices, from simple single-container applications to complex multi-service architectures.
-</p>
+A comprehensive collection of Docker examples demonstrating containerization best practices, from simple single-container applications to complex multi-service architectures.
+
+[![Docker](https://img.shields.io/badge/Docker-20.10+-2496ED?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Node.js](https://img.shields.io/badge/Node.js-22-339933?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-19.2-61DAFB?style=flat&logo=react&logoColor=black)](https://react.dev/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-7.0-47A248?style=flat&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Express](https://img.shields.io/badge/Express-5.2-000000?style=flat&logo=express&logoColor=white)](https://expressjs.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+[Single Dockerfile](./single-dockerfile/) · [Multi-Container Compose](./multi-docker-compose/) · [Contributing](#contributing)
+
+</div>
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
+- [What You'll Learn](#what-youll-learn)
 - [Examples](#examples)
 - [Prerequisites](#prerequisites)
 - [Quick Start](#quick-start)
 - [Project Structure](#project-structure)
 - [Learning Path](#learning-path)
+- [Docker Cheat Sheet](#docker-cheat-sheet)
 - [Contributing](#contributing)
 - [License](#license)
+
+---
 
 ## Overview
 
 This repository contains practical Docker examples designed for developers who want to learn containerization from basic to advanced concepts. Each example includes detailed documentation, best practices, and production-ready configurations.
 
-### What You'll Learn
+---
 
-- 🏗️ Building Docker images with single and multi-stage builds
-- 🔧 Writing optimized Dockerfiles
-- 🔗 Container networking and communication
-- 📦 Docker Compose for multi-container applications
-- 🔒 Security best practices (non-root users, minimal images)
-- 💾 Data persistence with volumes
-- ❤️ Health checks and container orchestration
+## What You'll Learn
+
+| Concept | Description |
+|---------|-------------|
+| **Docker Images** | Building images with single and multi-stage builds |
+| **Dockerfiles** | Writing optimized, production-ready Dockerfiles |
+| **Networking** | Container networking and inter-service communication |
+| **Docker Compose** | Orchestrating multi-container applications |
+| **Security** | Implementing non-root users and minimal images |
+| **Persistence** | Data persistence with Docker volumes |
+| **Health Checks** | Container health monitoring and orchestration |
+
+---
 
 ## Examples
 
@@ -47,7 +61,7 @@ This repository contains practical Docker examples designed for developers who w
 | **Folder** | [`single-dockerfile/`](./single-dockerfile/) |
 | **Description** | Simple Node.js application running in a single container |
 | **Concepts** | Basic Dockerfile, multi-stage builds, port mapping |
-| **Difficulty** | ⭐ Beginner |
+| **Difficulty** | Beginner |
 
 ```bash
 cd single-dockerfile
@@ -55,7 +69,7 @@ docker build -t single-docker-app .
 docker run -p 3000:3000 single-docker-app
 ```
 
-[📖 View Full Documentation](./single-dockerfile/README.md)
+[View Full Documentation →](./single-dockerfile/README.md)
 
 ---
 
@@ -66,7 +80,7 @@ docker run -p 3000:3000 single-docker-app
 | **Folder** | [`multi-docker-compose/`](./multi-docker-compose/) |
 | **Description** | Full-stack application with React frontend, Node.js backend, and MongoDB |
 | **Concepts** | Docker Compose, service orchestration, networking, volumes, health checks |
-| **Difficulty** | ⭐⭐⭐ Intermediate |
+| **Difficulty** | Intermediate |
 
 ```bash
 cd multi-docker-compose
@@ -74,6 +88,7 @@ docker compose up --build
 ```
 
 **Architecture:**
+
 ```
 ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
 │   Frontend  │────▶│   Backend   │────▶│   MongoDB   │
@@ -82,13 +97,13 @@ docker compose up --build
 └─────────────┘     └─────────────┘     └─────────────┘
 ```
 
-[📖 View Full Documentation](./multi-docker-compose/README.md)
+[View Full Documentation →](./multi-docker-compose/README.md)
 
 ---
 
 ## Prerequisites
 
-Before getting started, ensure you have the following installed:
+Ensure you have the following installed before getting started:
 
 | Tool | Minimum Version | Installation |
 |------|-----------------|--------------|
@@ -104,6 +119,8 @@ docker compose version
 git --version
 ```
 
+---
+
 ## Quick Start
 
 ```bash
@@ -116,6 +133,8 @@ cd docker-examples
 # Choose an example and follow its README
 cd single-dockerfile    # or multi-docker-compose
 ```
+
+---
 
 ## Project Structure
 
@@ -147,115 +166,91 @@ docker-examples/
         └── package.json        # Dependencies
 ```
 
+---
+
 ## Learning Path
 
-Follow this recommended learning path:
+Follow this recommended learning path to progressively build your Docker skills:
 
-```
-Step 1                          Step 2
-┌─────────────────────┐        ┌─────────────────────────────┐
-│  single-dockerfile  │  ───▶  │   multi-docker-compose      │
-│                     │        │                             │
-│  • Basic Dockerfile │        │  • Docker Compose           │
-│  • Build & Run      │        │  • Multi-service apps       │
-│  • Port Mapping     │        │  • Networking & Volumes     │
-│  • Multi-stage      │        │  • Health Checks            │
-└─────────────────────┘        └─────────────────────────────┘
-```
+| Step | Example | Concepts Covered |
+|------|---------|------------------|
+| 1 | [single-dockerfile](./single-dockerfile/) | Basic Dockerfile, Build & Run, Port Mapping, Multi-stage builds |
+| 2 | [multi-docker-compose](./multi-docker-compose/) | Docker Compose, Multi-service apps, Networking, Volumes, Health Checks |
 
-### Key Concepts by Example
+### Concepts by Example
 
 | Concept | Single Dockerfile | Multi Docker Compose |
 |---------|:-----------------:|:--------------------:|
-| Basic Dockerfile | ✅ | ✅ |
-| Multi-stage Builds | ✅ | ✅ |
-| Port Mapping | ✅ | ✅ |
-| Docker Compose | ❌ | ✅ |
-| Service Networking | ❌ | ✅ |
-| Volume Persistence | ❌ | ✅ |
-| Health Checks | ❌ | ✅ |
-| Dependencies | ❌ | ✅ |
+| Basic Dockerfile | ✓ | ✓ |
+| Multi-stage Builds | ✓ | ✓ |
+| Port Mapping | ✓ | ✓ |
+| Docker Compose | - | ✓ |
+| Service Networking | - | ✓ |
+| Volume Persistence | - | ✓ |
+| Health Checks | - | ✓ |
+| Service Dependencies | - | ✓ |
+
+---
 
 ## Docker Cheat Sheet
 
 ### Essential Commands
 
-```bash
-# Build an image
-docker build -t <image-name> .
-
-# Run a container
-docker run -p <host-port>:<container-port> <image-name>
-
-# Run in background
-docker run -d -p <host-port>:<container-port> --name <container-name> <image-name>
-
-# List running containers
-docker ps
-
-# Stop a container
-docker stop <container-name>
-
-# View logs
-docker logs <container-name>
-
-# Remove a container
-docker rm <container-name>
-
-# Remove an image
-docker rmi <image-name>
-```
+| Command | Description |
+|---------|-------------|
+| `docker build -t <image-name> .` | Build an image |
+| `docker run -p <host>:<container> <image>` | Run a container |
+| `docker run -d --name <name> <image>` | Run in background |
+| `docker ps` | List running containers |
+| `docker stop <container>` | Stop a container |
+| `docker logs <container>` | View logs |
+| `docker rm <container>` | Remove a container |
+| `docker rmi <image>` | Remove an image |
 
 ### Docker Compose Commands
 
-```bash
-# Start all services
-docker compose up
-
-# Start in background
-docker compose up -d
-
-# Build and start
-docker compose up --build
-
-# Stop all services
-docker compose down
-
-# View logs
-docker compose logs
-
-# List services
-docker compose ps
-```
-
-## Contributing
-
-Contributions are welcome! Here's how you can help:
-
-1. **Fork** the repository
-2. **Create** a feature branch: `git checkout -b feature/new-example`
-3. **Commit** your changes: `git commit -m 'Add new Docker example'`
-4. **Push** to the branch: `git push origin feature/new-example`
-5. **Submit** a Pull Request
-
-### Contribution Ideas
-
-- [ ] Add Docker Swarm example
-- [ ] Add Kubernetes manifests
-- [ ] Add CI/CD pipeline examples
-- [ ] Add more language examples (Python, Go, etc.)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+| Command | Description |
+|---------|-------------|
+| `docker compose up` | Start all services |
+| `docker compose up -d` | Start in background |
+| `docker compose up --build` | Build and start |
+| `docker compose down` | Stop all services |
+| `docker compose logs` | View logs |
+| `docker compose ps` | List services |
 
 ---
 
-<p align="center">
-  <strong>⭐ Star this repository if you find it helpful!</strong>
-</p>
+## Contributing
 
-<p align="center">
-  Made with ❤️ for the Docker community
-</p>
+Contributions are welcome! Please follow these steps:
 
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/new-example`)
+3. Commit your changes (`git commit -m 'Add new Docker example'`)
+4. Push to the branch (`git push origin feature/new-example`)
+5. Open a Pull Request
+
+### Contribution Ideas
+
+| Priority | Feature |
+|----------|---------|
+| High | Docker Swarm example |
+| High | Kubernetes manifests |
+| Medium | CI/CD pipeline examples |
+| Medium | Python/Go containerization examples |
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+
+**[⬆ Back to Top](#docker-examples)**
+
+Made with ❤️ for the Docker community
+
+</div>

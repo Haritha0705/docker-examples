@@ -1,10 +1,24 @@
+<div align="center">
+
 # Single Dockerfile Application
 
-A containerized Node.js application demonstrating Docker fundamentals with a simple, single-container setup. This example is perfect for beginners learning Docker basics.
+A containerized Node.js application demonstrating Docker fundamentals with a simple, single-container setup. Perfect for beginners learning Docker basics.
+
+[![Docker](https://img.shields.io/badge/Docker-20.10+-2496ED?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Node.js](https://img.shields.io/badge/Node.js-18_Alpine-339933?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express](https://img.shields.io/badge/Express-5.2-000000?style=flat&logo=express&logoColor=white)](https://expressjs.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
+
+[Getting Started](#getting-started) · [Usage](#usage) · [Dockerfile Explained](#dockerfile-explained) · [Troubleshooting](#troubleshooting)
+
+</div>
+
+---
 
 ## Table of Contents
 
 - [Overview](#overview)
+- [Architecture](#architecture)
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
@@ -15,17 +29,23 @@ A containerized Node.js application demonstrating Docker fundamentals with a sim
 - [Contributing](#contributing)
 - [License](#license)
 
+---
+
 ## Overview
 
-This example demonstrates:
+This example demonstrates fundamental Docker concepts through a practical Node.js application:
 
-- ✅ Writing a basic Dockerfile
-- ✅ Multi-stage builds for optimized images
-- ✅ Building Docker images
-- ✅ Running containers with port mapping
-- ✅ Container lifecycle management
+| Feature | Description |
+|---------|-------------|
+| **Basic Dockerfile** | Learn essential Dockerfile instructions |
+| **Multi-stage Builds** | Optimize image size with build stages |
+| **Image Building** | Build production-ready Docker images |
+| **Port Mapping** | Expose container ports to host machine |
+| **Container Lifecycle** | Manage container start, stop, and removal |
 
-### Architecture
+---
+
+## Architecture
 
 ```
 ┌────────────────────────────────────┐
@@ -43,19 +63,23 @@ This example demonstrates:
       Host Port: 3000
 ```
 
+---
+
 ## Prerequisites
 
-Before you begin, ensure you have the following installed on your system:
+Ensure you have Docker installed on your system:
 
 | Tool | Minimum Version | Installation |
 |------|-----------------|--------------|
 | Docker | 20.10+ | [Get Docker](https://docs.docker.com/get-docker/) |
 
-Verify your Docker installation:
+Verify your installation:
 
 ```bash
 docker --version
 ```
+
+---
 
 ## Getting Started
 
@@ -72,10 +96,10 @@ cd docker-examples/single-dockerfile
 docker build -t single-docker-app .
 ```
 
-This command:
-- Reads the `Dockerfile` in the current directory
-- Builds a Docker image
-- Tags it as `single-docker-app`
+| Flag | Description |
+|------|-------------|
+| `-t single-docker-app` | Tags the image with a name |
+| `.` | Uses current directory as build context |
 
 ### Step 3: Run the Container
 
@@ -83,10 +107,9 @@ This command:
 docker run -p 3000:3000 single-docker-app
 ```
 
-This command:
-- Creates a new container from the image
-- Maps port 3000 on your host to port 3000 in the container
-- Runs the application in the foreground
+| Flag | Description |
+|------|-------------|
+| `-p 3000:3000` | Maps host port 3000 to container port 3000 |
 
 ### Step 4: Access the Application
 
@@ -96,59 +119,37 @@ Open your browser and navigate to:
 http://localhost:3000
 ```
 
+---
+
 ## Usage
 
-### Running in Detached Mode
+### Running Containers
 
-Run the container in the background:
-
-```bash
-docker run -d -p 3000:3000 --name my-app single-docker-app
-```
-
-| Flag | Description |
-|------|-------------|
-| `-d` | Run container in background (detached mode) |
-| `-p 3000:3000` | Map host port 3000 to container port 3000 |
-| `--name my-app` | Assign a name to the container |
+| Command | Description |
+|---------|-------------|
+| `docker run -p 3000:3000 single-docker-app` | Run in foreground |
+| `docker run -d -p 3000:3000 --name my-app single-docker-app` | Run in background |
+| `docker run -p 8080:3000 single-docker-app` | Map to different host port |
 
 ### Managing Containers
 
-```bash
-# List running containers
-docker ps
-
-# Stop the container
-docker stop my-app
-
-# Start the container again
-docker start my-app
-
-# Restart the container
-docker restart my-app
-
-# Remove the container (must be stopped first)
-docker rm my-app
-
-# Force remove a running container
-docker rm -f my-app
-```
+| Command | Description |
+|---------|-------------|
+| `docker ps` | List running containers |
+| `docker stop my-app` | Stop the container |
+| `docker start my-app` | Start a stopped container |
+| `docker restart my-app` | Restart the container |
+| `docker rm my-app` | Remove the container |
+| `docker rm -f my-app` | Force remove running container |
 
 ### Viewing Logs
 
-```bash
-# View container logs
-docker logs my-app
-
-# Follow logs in real-time
-docker logs -f my-app
-
-# View last 50 lines
-docker logs --tail 50 my-app
-
-# View logs with timestamps
-docker logs -t my-app
-```
+| Command | Description |
+|---------|-------------|
+| `docker logs my-app` | View container logs |
+| `docker logs -f my-app` | Follow logs in real-time |
+| `docker logs --tail 50 my-app` | View last 50 lines |
+| `docker logs -t my-app` | View logs with timestamps |
 
 ### Accessing Container Shell
 
@@ -159,6 +160,8 @@ docker exec -it my-app sh
 # Run a single command
 docker exec my-app ls -la
 ```
+
+---
 
 ## Dockerfile Explained
 
@@ -181,7 +184,7 @@ EXPOSE 3000
 CMD ["node", "index.js"]
 ```
 
-### Stage-by-Stage Breakdown
+### Stage Breakdown
 
 | Stage | Purpose |
 |-------|---------|
@@ -199,56 +202,39 @@ CMD ["node", "index.js"]
 | `EXPOSE` | Documents which port the container listens on |
 | `CMD` | Specifies the command to run when container starts |
 
+---
+
 ## Configuration
 
 ### Environment Variables
 
-Pass environment variables to the container:
-
-```bash
-# Single variable
-docker run -p 3000:3000 -e NODE_ENV=production single-docker-app
-
-# Multiple variables
-docker run -p 3000:3000 \
-  -e NODE_ENV=production \
-  -e PORT=3000 \
-  single-docker-app
-
-# Using an env file
-docker run -p 3000:3000 --env-file .env single-docker-app
-```
-
-### Custom Port Mapping
-
-Map to a different host port:
-
-```bash
-# Access at http://localhost:8080
-docker run -p 8080:3000 single-docker-app
-```
+| Method | Command |
+|--------|---------|
+| Single variable | `docker run -p 3000:3000 -e NODE_ENV=production single-docker-app` |
+| Multiple variables | `docker run -p 3000:3000 -e NODE_ENV=production -e PORT=3000 single-docker-app` |
+| Using env file | `docker run -p 3000:3000 --env-file .env single-docker-app` |
 
 ### Volume Mounting
 
-Mount local files or directories:
+| Use Case | Command |
+|----------|---------|
+| Mount directory | `docker run -p 3000:3000 -v $(pwd)/data:/app/data single-docker-app` |
+| Mount single file | `docker run -p 3000:3000 -v $(pwd)/config.json:/app/config.json single-docker-app` |
 
-```bash
-# Mount a directory
-docker run -p 3000:3000 -v $(pwd)/data:/app/data single-docker-app
-
-# Mount a single file
-docker run -p 3000:3000 -v $(pwd)/config.json:/app/config.json single-docker-app
-```
+---
 
 ## Troubleshooting
 
 ### Common Issues
 
-#### Port Already in Use
+| Issue | Solution |
+|-------|----------|
+| Port already in use | Use a different port: `docker run -p 8080:3000 single-docker-app` |
+| Container exits immediately | Check logs: `docker logs <container_id>` |
+| Image build fails | Rebuild without cache: `docker build --no-cache -t single-docker-app .` |
+| Cannot access application | Verify container is running: `docker ps` |
 
-**Error:** `bind: address already in use`
-
-**Solution:** Use a different port or stop the process using port 3000:
+### Finding Processes Using a Port
 
 ```bash
 # Find process using port 3000
@@ -256,74 +242,39 @@ lsof -i :3000
 
 # Kill the process
 kill -9 <PID>
-
-# Or use a different port
-docker run -p 8080:3000 single-docker-app
 ```
-
-#### Container Exits Immediately
-
-**Solution:** Check the logs for error messages:
-
-```bash
-docker logs <container_id>
-```
-
-#### Image Build Fails
-
-**Solution:** Rebuild without cache:
-
-```bash
-docker build --no-cache -t single-docker-app .
-```
-
-#### Cannot Access Application
-
-**Checklist:**
-1. ✅ Container is running: `docker ps`
-2. ✅ Port mapping is correct: `-p 3000:3000`
-3. ✅ No firewall blocking the port
-4. ✅ Application is listening on `0.0.0.0`, not `127.0.0.1`
 
 ### Debugging Commands
 
-```bash
-# Inspect container details
-docker inspect my-app
+| Command | Description |
+|---------|-------------|
+| `docker inspect my-app` | Inspect container details |
+| `docker stats my-app` | View resource usage |
+| `docker top my-app` | Check container processes |
 
-# View container resource usage
-docker stats my-app
-
-# Check container processes
-docker top my-app
-```
+---
 
 ## Best Practices
 
-This example demonstrates several Docker best practices:
+This example implements several Docker best practices:
 
-### ✅ Multi-Stage Builds
-Reduces final image size by separating build and runtime environments.
+| Practice | Implementation |
+|----------|----------------|
+| **Multi-Stage Builds** | Separates build and runtime environments for smaller images |
+| **Alpine-Based Images** | Uses `node:18-alpine` for minimal footprint (~50MB vs ~350MB) |
+| **Layer Optimization** | Copies `package*.json` before source code for better caching |
+| **Production Dependencies** | Uses `npm install --production` to exclude dev dependencies |
+| **Port Documentation** | Uses `EXPOSE` to document application port |
 
-### ✅ Alpine-Based Images
-Uses `node:18-alpine` for a smaller footprint (~50MB vs ~350MB for full image).
-
-### ✅ Layer Optimization
-Copies `package*.json` before source code to leverage Docker's layer caching.
-
-### ✅ Production Dependencies Only
-Uses `npm install --production` to exclude dev dependencies.
-
-### ✅ Explicit Port Documentation
-Uses `EXPOSE` to document the application port.
-
-## Image Size Comparison
+### Image Size Comparison
 
 | Approach | Approximate Size |
-|----------|-----------------|
+|----------|------------------|
 | `node:18` (full) | ~350 MB |
 | `node:18-alpine` | ~50 MB |
 | Multi-stage with Alpine | ~40 MB |
+
+---
 
 ## Contributing
 
@@ -335,13 +286,18 @@ Contributions are welcome! Please follow these steps:
 4. Push to the branch (`git push origin feature/improvement`)
 5. Open a Pull Request
 
+---
+
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](../LICENSE) file for details.
 
 ---
 
-<p align="center">
-  <strong>Next Steps:</strong> Check out the <a href="../multi-docker-compose/">Multi-Container Example</a> to learn Docker Compose!
-</p>
+<div align="center">
 
+**[⬆ Back to Top](#single-dockerfile-application)**
+
+**Next Steps:** Check out the [Multi-Container Example](../multi-docker-compose/) to learn Docker Compose!
+
+</div>

@@ -1,10 +1,27 @@
+<div align="center">
+
 # Multi-Container Application with Docker Compose
 
 A full-stack containerized application demonstrating microservices architecture with Docker Compose. This example showcases a React frontend, Node.js backend, and MongoDB database working together in separate containers.
 
+[![Docker](https://img.shields.io/badge/Docker-20.10+-2496ED?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Docker Compose](https://img.shields.io/badge/Docker_Compose-2.0+-2496ED?style=flat&logo=docker&logoColor=white)](https://docs.docker.com/compose/)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react&logoColor=black)](https://react.dev/)
+[![Node.js](https://img.shields.io/badge/Node.js-22-339933?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-6.0-47A248?style=flat&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](../LICENSE)
+
+[Getting Started](#getting-started) · [Services](#services) · [Configuration](#configuration) · [Troubleshooting](#troubleshooting)
+
+</div>
+
+---
+
 ## Table of Contents
 
-- [Architecture Overview](#architecture-overview)
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
 - [Services](#services)
@@ -16,7 +33,23 @@ A full-stack containerized application demonstrating microservices architecture 
 - [Contributing](#contributing)
 - [License](#license)
 
-## Architecture Overview
+---
+
+## Overview
+
+This example demonstrates advanced Docker concepts through a production-ready microservices application:
+
+| Feature | Description |
+|---------|-------------|
+| **Docker Compose** | Orchestrate multiple containers with a single command |
+| **Service Networking** | Inter-container communication via Docker networks |
+| **Volume Persistence** | Persistent data storage with Docker volumes |
+| **Health Checks** | Container health monitoring and dependencies |
+| **Multi-stage Builds** | Optimized production images for all services |
+
+---
+
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -26,29 +59,56 @@ A full-stack containerized application demonstrating microservices architecture 
 │  │   (React)   │───▶│  (Node.js)  │───▶│    (Database)       │  │
 │  │  Port 3000  │    │  Port 2000  │    │    Port 27017       │  │
 │  └─────────────┘    └─────────────┘    └─────────────────────┘  │
-│       nginx              express              mongo:6            │
+│       nginx              express              mongo:7            │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-| Service   | Technology       | Port  | Description                    |
-|-----------|------------------|-------|--------------------------------|
-| Frontend  | React + Vite     | 3000  | User interface served by Nginx |
-| Backend   | Node.js + Express| 2000  | REST API server                |
-| MongoDB   | MongoDB 6        | 27017 | NoSQL database                 |
+---
+
+## Tech Stack
+
+### Frontend
+
+| Technology | Purpose |
+|------------|---------|
+| React 18 | UI Framework |
+| Vite | Build Tool |
+| Nginx Alpine | Production Server |
+
+### Backend
+
+| Technology | Purpose |
+|------------|---------|
+| Node.js 22 | Runtime Environment |
+| Express.js | Web Framework |
+| Mongoose | MongoDB ODM |
+
+### Database
+
+| Technology | Purpose |
+|------------|---------|
+| MongoDB 6 | NoSQL Database |
+| Docker Volume | Data Persistence |
+
+---
 
 ## Prerequisites
 
-Before you begin, ensure you have the following installed on your system:
+Ensure you have the following installed on your system:
 
-- **Docker**: Version 20.10 or higher ([Installation Guide](https://docs.docker.com/get-docker/))
-- **Docker Compose**: Version 2.0 or higher ([Installation Guide](https://docs.docker.com/compose/install/))
+| Tool | Minimum Version | Installation |
+|------|-----------------|--------------|
+| Docker | 20.10+ | [Get Docker](https://docs.docker.com/get-docker/) |
+| Docker Compose | 2.0+ | [Get Docker Compose](https://docs.docker.com/compose/install/) |
 
-To verify your installation:
+Verify your installation:
 
 ```bash
 docker --version
 docker compose version
 ```
+
+---
 
 ## Getting Started
 
@@ -68,106 +128,96 @@ docker compose up --build
 
 Once all containers are running and healthy:
 
-| Service   | URL                          |
-|-----------|------------------------------|
-| Frontend  | http://localhost:3000        |
-| Backend   | http://localhost:2000        |
-| MongoDB   | mongodb://localhost:27017    |
+| Service | URL |
+|---------|-----|
+| Frontend | http://localhost:3000 |
+| Backend API | http://localhost:2000 |
+| MongoDB | mongodb://localhost:27017 |
+
+---
 
 ## Services
 
 ### Frontend Service
 
-- **Technology**: React 18 with Vite
-- **Server**: Nginx Alpine (production)
-- **Features**:
-  - Multi-stage build for optimized image size
-  - Gzip compression enabled
-  - Pre-compressed static assets
-  - SPA routing configuration
-  - Aggressive caching for static assets
+| Aspect | Details |
+|--------|---------|
+| **Technology** | React 18 with Vite |
+| **Server** | Nginx Alpine (production) |
+| **Port** | 3000 |
+
+**Features:**
+- Multi-stage build for optimized image size
+- Gzip compression enabled
+- Pre-compressed static assets
+- SPA routing configuration
+- Aggressive caching for static assets
 
 ### Backend Service
 
-- **Technology**: Node.js 22 with Express
-- **Features**:
-  - Multi-stage build for minimal image size
-  - Non-root user for security
-  - Health check endpoint
-  - MongoDB connection with retry logic
-  - RESTful API architecture
+| Aspect | Details |
+|--------|---------|
+| **Technology** | Node.js 22 with Express |
+| **Port** | 2000 |
+
+**Features:**
+- Multi-stage build for minimal image size
+- Non-root user for security
+- Health check endpoint
+- MongoDB connection with retry logic
+- RESTful API architecture
 
 ### MongoDB Service
 
-- **Image**: Official MongoDB 6
-- **Features**:
-  - Persistent data storage with Docker volumes
-  - Health check configuration
-  - Automatic restart policy
+| Aspect | Details |
+|--------|---------|
+| **Image** | Official MongoDB 7 |
+| **Port** | 27017 |
+
+**Features:**
+- Persistent data storage with Docker volumes
+- Health check configuration
+- Automatic restart policy
+
+---
 
 ## Usage
 
 ### Starting Services
 
-```bash
-# Start all services in foreground
-docker compose up
-
-# Start all services in background (detached mode)
-docker compose up -d
-
-# Build and start (after code changes)
-docker compose up --build
-
-# Start specific service
-docker compose up frontend
-```
+| Command | Description |
+|---------|-------------|
+| `docker compose up` | Start all services in foreground |
+| `docker compose up -d` | Start all services in background |
+| `docker compose up --build` | Build and start (after code changes) |
+| `docker compose up frontend` | Start specific service |
 
 ### Stopping Services
 
-```bash
-# Stop all services
-docker compose down
-
-# Stop and remove volumes (WARNING: deletes database data)
-docker compose down -v
-
-# Stop specific service
-docker compose stop backend
-```
+| Command | Description |
+|---------|-------------|
+| `docker compose down` | Stop all services |
+| `docker compose down -v` | Stop and remove volumes (deletes data) |
+| `docker compose stop backend` | Stop specific service |
 
 ### Viewing Logs
 
-```bash
-# View all service logs
-docker compose logs
+| Command | Description |
+|---------|-------------|
+| `docker compose logs` | View all service logs |
+| `docker compose logs backend` | View logs for specific service |
+| `docker compose logs -f` | Follow logs in real-time |
+| `docker compose logs --tail 100` | View last 100 lines |
 
-# View logs for specific service
-docker compose logs backend
+### Service Management
 
-# Follow logs in real-time
-docker compose logs -f
+| Command | Description |
+|---------|-------------|
+| `docker compose ps` | View running containers |
+| `docker compose up -d --scale backend=3` | Scale backend instances |
+| `docker inspect --format='{{.State.Health.Status}}' backend` | Check health status |
 
-# View last 100 lines
-docker compose logs --tail 100
-```
-
-### Checking Service Health
-
-```bash
-# View running containers and their status
-docker compose ps
-
-# Check health status
-docker inspect --format='{{.State.Health.Status}}' backend
-```
-
-### Scaling Services
-
-```bash
-# Scale backend to 3 instances (requires load balancer setup)
-docker compose up -d --scale backend=3
-```
+---
 
 ## Configuration
 
@@ -175,19 +225,19 @@ docker compose up -d --scale backend=3
 
 #### Backend Service
 
-| Variable      | Default                          | Description              |
-|---------------|----------------------------------|--------------------------|
-| `MONGODB_URL` | `mongodb://mongo:27017/usersdb` | MongoDB connection string|
-| `PORT`        | `2000`                           | Backend server port      |
-| `NODE_ENV`    | `production`                     | Node environment         |
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `MONGODB_URL` | `mongodb://mongo:27017/usersdb` | MongoDB connection string |
+| `PORT` | `2000` | Backend server port |
+| `NODE_ENV` | `production` | Node environment |
 
 #### Frontend Service
 
-| Variable       | Default                  | Description          |
-|----------------|--------------------------|----------------------|
-| `VITE_API_URL` | `http://localhost:2000`  | Backend API URL      |
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `VITE_API_URL` | `http://localhost:2000` | Backend API URL |
 
-### Customizing Configuration
+### Creating Environment File
 
 Create a `.env` file in the project root:
 
@@ -203,22 +253,20 @@ VITE_API_URL=http://localhost:2000
 
 ### Using Different Environments
 
-```bash
-# Development
-docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+| Environment | Command |
+|-------------|---------|
+| Development | `docker compose -f docker-compose.yml -f docker-compose.dev.yml up` |
+| Production | `docker compose -f docker-compose.yml -f docker-compose.prod.yml up` |
 
-# Production
-docker compose -f docker-compose.yml -f docker-compose.prod.yml up
-```
+---
 
 ## Development
 
-### Hot Reloading (Development Mode)
+### Hot Reloading Setup
 
-For development with hot reloading, you can mount source code as volumes:
+For development with hot reloading, create a `docker-compose.override.yml`:
 
 ```yaml
-# docker-compose.override.yml
 services:
   backend:
     volumes:
@@ -235,77 +283,37 @@ services:
 
 ### Running Tests
 
-```bash
-# Run backend tests
-docker compose exec backend npm test
-
-# Run frontend tests
-docker compose exec frontend npm test
-```
+| Command | Description |
+|---------|-------------|
+| `docker compose exec backend npm test` | Run backend tests |
+| `docker compose exec frontend npm test` | Run frontend tests |
 
 ### Accessing Container Shell
 
-```bash
-# Access backend container
-docker compose exec backend sh
+| Command | Description |
+|---------|-------------|
+| `docker compose exec backend sh` | Access backend container |
+| `docker compose exec mongo mongosh` | Access MongoDB shell |
 
-# Access MongoDB shell
-docker compose exec mongo mongosh
-```
+---
 
 ## Troubleshooting
 
 ### Common Issues
 
-#### Services Not Starting
+| Issue | Solution |
+|-------|----------|
+| Services not starting | Check status: `docker compose ps` and logs: `docker compose logs --tail 50 <service>` |
+| MongoDB connection failed | Verify MongoDB health: `docker compose exec mongo mongosh --eval "db.adminCommand('ping')"` |
+| Port already in use | Find process: `lsof -i :3000` or change port mapping in docker-compose.yml |
+| Changes not reflected | Rebuild: `docker compose build --no-cache` |
 
-```bash
-# Check service status
-docker compose ps
+### Cleanup Commands
 
-# View detailed logs
-docker compose logs --tail 50 <service-name>
-```
-
-#### MongoDB Connection Failed
-
-Ensure MongoDB is healthy before backend starts:
-
-```bash
-# Check MongoDB health
-docker compose exec mongo mongosh --eval "db.adminCommand('ping')"
-```
-
-#### Port Already in Use
-
-```bash
-# Find process using the port
-lsof -i :3000
-
-# Use different ports in docker-compose.yml
-ports:
-  - "8080:3000"  # Map to port 8080 instead
-```
-
-#### Rebuilding After Changes
-
-```bash
-# Rebuild without cache
-docker compose build --no-cache
-
-# Rebuild specific service
-docker compose build --no-cache backend
-```
-
-#### Cleaning Up
-
-```bash
-# Remove all containers, networks, and volumes
-docker compose down -v --rmi all
-
-# Prune unused Docker resources
-docker system prune -a
-```
+| Command | Description |
+|---------|-------------|
+| `docker compose down -v --rmi all` | Remove containers, networks, volumes, and images |
+| `docker system prune -a` | Prune unused Docker resources |
 
 ### Health Check Debugging
 
@@ -314,29 +322,45 @@ docker system prune -a
 docker inspect --format='{{json .State.Health}}' <container-name> | jq
 ```
 
+---
+
 ## Best Practices
 
 This example demonstrates several Docker best practices:
 
 ### Security
-- ✅ Non-root user in containers
-- ✅ Multi-stage builds to minimize attack surface
-- ✅ No secrets in Dockerfiles
+
+| Practice | Implementation |
+|----------|----------------|
+| Non-root user | Containers run as non-root user |
+| Minimal images | Multi-stage builds reduce attack surface |
+| No secrets in Dockerfiles | Environment variables for sensitive data |
 
 ### Performance
-- ✅ Alpine-based images for smaller size
-- ✅ Layer caching optimization
-- ✅ Gzip compression for static assets
+
+| Practice | Implementation |
+|----------|----------------|
+| Alpine-based images | Smaller image sizes |
+| Layer caching | Optimized Dockerfile instruction order |
+| Gzip compression | Compressed static assets |
 
 ### Reliability
-- ✅ Health checks for all services
-- ✅ Automatic restart policies
-- ✅ Dependency management with `depends_on`
+
+| Practice | Implementation |
+|----------|----------------|
+| Health checks | All services have health checks |
+| Restart policies | Automatic restart on failure |
+| Dependency management | `depends_on` for service ordering |
 
 ### Maintainability
-- ✅ Clear service separation
-- ✅ Environment variable configuration
-- ✅ Persistent volumes for data
+
+| Practice | Implementation |
+|----------|----------------|
+| Service separation | Clear microservices architecture |
+| Environment configuration | Configurable via environment variables |
+| Persistent volumes | Data survives container restarts |
+
+---
 
 ## Contributing
 
@@ -348,14 +372,18 @@ Contributions are welcome! Please follow these steps:
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
+---
+
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](../LICENSE) file for details.
 
 ---
 
-<p align="center">
-  <strong>Need Help?</strong><br>
-  Open an issue in the repository for questions or support.
-</p>
+<div align="center">
 
+**[⬆ Back to Top](#multi-container-application-with-docker-compose)**
+
+Need Help? Open an issue in the repository for questions or support.
+
+</div>
