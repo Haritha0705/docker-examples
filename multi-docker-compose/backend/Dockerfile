@@ -48,5 +48,5 @@ USER nodejs
 # Expose backend port
 EXPOSE 2000
 
-# Run backend with node directly
+# Run backend with node directly (not nodemon in production)
 CMD ["node", "index.js"]
